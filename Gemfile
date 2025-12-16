@@ -35,8 +35,10 @@ gem "tailwindcss-rails"
 group :development, :test do
   gem "faker"
   gem "debug", platforms: %i[mri windows]
+  gem "sqlite3"
 end
 
 group :development do
   gem "listen", "~> 3.0.5"
 end
+
