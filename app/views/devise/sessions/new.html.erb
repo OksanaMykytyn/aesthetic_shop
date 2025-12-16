@@ -1,0 +1,66 @@
+<section class="py-16 bg-white text-black">
+  <div class="container max-w-md">
+
+    <h1 class="text-xl text-center mb-8">
+      Вхід
+    </h1>
+
+    <%= form_for(resource,
+      as: resource_name,
+      url: session_path(resource_name),
+      html: {
+        class: "space-y-6",
+        data: { controller: "password form-errors" }
+      }) do |f| %>
+
+      <div data-field>
+        <%= f.email_field :email,
+          placeholder: "Електронна пошта",
+          autofocus: true,
+          class: "search-input w-full #{'input-error' if resource.errors[:email].any?}",
+          data: { action: "input->form-errors#clear" } %>
+
+        <% resource.errors[:email].each do |msg| %>
+          <p class="error-text mt-1" data-error><%= msg %></p>
+        <% end %>
+      </div>
+
+      <div data-field>
+        <div class="relative">
+          <%= f.password_field :password,
+            placeholder: "Пароль",
+            class: "search-input w-full pr-10 #{'input-error' if resource.errors[:password].any?}",
+            data: {
+              password_target: "input",
+              action: "input->form-errors#clear"
+            } %>
+
+          <button
+            type="button"
+            class="absolute right-3 top-1/2 -translate-y-1/2"
+            data-action="click->password#toggle"
+            tabindex="-1"
+          >
+            <i class="fa-solid fa-eye"></i>
+          </button>
+        </div>
+
+        <% resource.errors[:password].each do |msg| %>
+          <p class="error-text mt-1" data-error><%= msg %></p>
+        <% end %>
+      </div>
+
+      <button type="submit" class="primary-button w-full">
+        Увійти
+      </button>
+
+      <p class="text-sm text-center">
+        Ще не маєте акаунту?
+        <%= link_to "Зареєструватися",
+          new_user_registration_path,
+          class: "underline" %>
+      </p>
+
+    <% end %>
+  </div>
+</section>

@@ -1,0 +1,34 @@
+<section class="py-12">
+  <div class="container max-w-md space-y-6">
+
+    <h1 class="text-xl">Редагування категорії</h1>
+
+    <%= form_with model: [:admin, @category], local: true do |f| %>
+
+      <%= f.label :name %>
+      <%= f.text_field :name, class: "w-full border p-2" %>
+
+      <%= f.label :description %>
+      <%= f.text_area :description, class: "w-full border p-2" %>
+
+      <%= f.label :photo %>
+      <%= f.file_field :photo %>
+
+      <h3 class="mt-6 mb-2 font-medium">Товари в категорії</h3>
+
+      <div class="space-y-2">
+        <%= f.collection_check_boxes :product_ids, @products, :id, :title do |b| %>
+          <label class="flex gap-2 items-center">
+            <%= b.check_box %>
+            <%= b.text %>
+          </label>
+        <% end %>
+      </div>
+
+      <%= f.submit "Зберегти",
+          class: "primary-button w-full mt-6" %>
+
+    <% end %>
+
+  </div>
+</section>

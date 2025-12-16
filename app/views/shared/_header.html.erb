@@ -1,0 +1,50 @@
+<header
+  class="fixed top-0 left-0 w-full bg-white border-b border-black z-50"
+>
+  <div class="container flex items-center justify-between h-16">
+
+    <div class="flex items-center gap-6">
+      <button
+        class="lg:hidden icon-btn"
+        data-action="click->mobile-menu#open"
+      >
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+      <nav class="hidden lg:flex gap-6 text-sm">
+        <%= link_to "Каталог", catalog_path, class: "nav-link" %>
+        <%= link_to "Категорії", categories_path, class: "nav-link" %>
+        <%= link_to "Колекції", collections_path, class: "nav-link" %>
+        <%= link_to "Про нас", "#", class: "nav-link" %>
+      </nav>
+    </div>
+
+<div class="flex items-center gap-4">
+
+  <% unless user_signed_in? && current_user.role == "manager" %>
+    <%= link_to cart_path, class: "icon-btn" do %>
+      <i class="fa-solid fa-cart-shopping"></i>
+    <% end %>
+  <% end %>
+
+  <% if user_signed_in? %>
+    <% if current_user.role == "manager" %>
+      <%= link_to admin_root_path, class: "icon-btn", title: "Адмін-панель" do %>
+        <i class="fa-solid fa-shield-halved"></i>
+      <% end %>
+    <% else %>
+      <%= link_to profile_path, class: "icon-btn", title: "Профіль" do %>
+        <i class="fa-solid fa-user"></i>
+      <% end %>
+    <% end %>
+  <% else %>
+    <%= link_to new_user_session_path, class: "icon-btn" do %>
+      <i class="fa-solid fa-right-to-bracket"></i>
+    <% end %>
+  <% end %>
+
+</div>
+
+
+  </div>
+</header>

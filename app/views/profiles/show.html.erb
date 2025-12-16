@@ -1,0 +1,32 @@
+<section class="py-16 bg-white text-black">
+  <div class="container max-w-md text-center space-y-8">
+
+    <div class="profile-avatar mx-auto">
+      <%= image_tag(
+        @user.avatar.attached? ?
+          url_for(@user.avatar) :
+          "https://i.pinimg.com/736x/eb/c4/3a/ebc43a1259ea5962db33ec79b8842719.jpg",
+        alt: "Фото профілю",
+        class: "avatar-image"
+      ) %>
+    </div>
+
+    <h1 class="text-xl font-medium">
+      <%= @user.first_name %> <%= @user.last_name %>
+    </h1>
+
+    <div class="space-y-4">
+
+      <%= link_to "Мої замовлення",
+    orders_path,
+    class: "w-full py-3 border border-black bg-black text-white text-sm transition hover:bg-white hover:text-black" %>
+
+      <%= button_to "Вийти",
+        destroy_user_session_path,
+        method: :delete,
+        class: "w-full py-3 border border-black text-black text-sm transition hover:bg-black hover:text-white" %>
+
+    </div>
+
+  </div>
+</section>

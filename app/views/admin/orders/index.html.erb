@@ -1,0 +1,44 @@
+<section class="py-12">
+  <div class="container max-w-5xl">
+
+    <h1 class="text-xl mb-6">Замовлення</h1>
+
+    <table class="w-full text-sm border">
+      <thead>
+        <tr class="border-b bg-gray-50">
+          <th class="p-3">№</th>
+          <th class="p-3">Користувач</th>
+          <th class="p-3">Сума</th>
+          <th class="p-3">Статус</th>
+          <th class="p-3">Дата</th>
+          <th class="p-3"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @orders.each do |order| %>
+          <tr class="border-b text-center">
+            <td class="p-3"><%= order.number || order.id %></td>
+            <td class="p-3"><%= order.user.email %></td>
+            <td class="p-3">
+              <%= number_to_currency(order.total_cents / 100.0, unit: "₴") %>
+            </td>
+            <td class="p-3"><%= order.status %></td>
+            <td class="p-3 text-xs">
+              <%= l(order.created_at, format: :short) %>
+            </td>
+            <td class="p-3">
+              <%= link_to "Переглянути",
+                  admin_order_path(order),
+                  class: "text-blue-600 text-xs" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <div class="mt-8 flex justify-center">
+    </div>
+
+  </div>
+</section>

@@ -1,0 +1,45 @@
+<section class="py-12">
+  <div class="container max-w-md space-y-6">
+
+    <h1 class="text-xl">Створення колекції</h1>
+
+    <%= form_with model: [:admin, @collection], local: true do |f| %>
+
+      <%= f.label :name, "Назва" %>
+      <%= f.text_field :name,
+          class: "w-full border border-black p-2",
+          required: true %>
+
+      <%= f.label :description, "Опис" %>
+      <%= f.text_area :description,
+          rows: 4,
+          class: "w-full border border-black p-2" %>
+
+      <%= f.label :photo, "Зображення" %>
+      <%= f.file_field :photo %>
+
+      <h3 class="mt-4 mb-2 font-medium">
+        Додати товари до колекції
+      </h3>
+
+      <div class="space-y-2 max-h-48 overflow-y-auto border p-2">
+        <%= f.collection_check_boxes :product_ids, @products, :id, :title do |b| %>
+          <label class="flex gap-2 items-center text-sm">
+            <%= b.check_box %>
+            <%= b.text %>
+          </label>
+        <% end %>
+      </div>
+
+      <div class="flex gap-4 pt-4">
+        <%= f.submit "Створити", class: "primary-button w-full" %>
+
+        <%= link_to "Скасувати",
+            admin_collections_path,
+            class: "w-full text-center border border-black py-3 hover:bg-black hover:text-white" %>
+      </div>
+
+    <% end %>
+
+  </div>
+</section>

@@ -1,0 +1,59 @@
+<section class="py-12">
+  <div class="container max-w-5xl">
+
+    <h1 class="text-xl mb-6">Відгуки користувачів</h1>
+
+    <table class="w-full text-sm border">
+      <thead>
+        <tr class="border-b bg-gray-50">
+          <th class="p-3 text-left">Користувач</th>
+          <th class="p-3 text-left">Товар</th>
+          <th class="p-3 text-center">Рейтинг</th>
+          <th class="p-3 text-left">Відгук</th>
+          <th class="p-3 text-center">Дата</th>
+          <th class="p-3"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @reviews.each do |review| %>
+          <tr class="border-b align-top">
+
+            <td class="p-3">
+              <%= review.user.email %>
+            </td>
+
+            <td class="p-3">
+              <%= review.product.title %>
+            </td>
+
+            <td class="p-3 text-center">
+              <%= review.rating %> / 5
+            </td>
+
+            <td class="p-3 max-w-md">
+              <%= review.comment.presence || "—" %>
+            </td>
+
+            <td class="p-3 text-center text-xs">
+              <%= l(review.created_at, format: :short) %>
+            </td>
+
+            <td class="p-3 text-center">
+              <%= button_to "Видалити",
+                  admin_review_path(review),
+                  method: :delete,
+                  data: { confirm: "Видалити цей відгук?" },
+                  class: "text-red-600 text-xs" %>
+            </td>
+
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <div class="mt-8 flex justify-center">
+    </div>
+
+  </div>
+</section>

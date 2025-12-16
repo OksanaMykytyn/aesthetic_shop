@@ -1,0 +1,30 @@
+<section class="py-12">
+  <div class="container">
+
+    <h1 class="text-center text-xl mb-8">
+      <%= @collection.name %>
+    </h1>
+
+    <% if @products.any? %>
+      <div
+        class="grid gap-6 justify-center
+               grid-cols-1
+               sm:grid-cols-2
+               lg:grid-cols-4"
+      >
+        <% @products.each do |product| %>
+          <%= render "products/card", product: product %>
+        <% end %>
+      </div>
+
+      <div class="flex justify-center mt-10">
+          <%= paginate @products, theme: 'custom' %>
+      </div>
+    <% else %>
+      <p class="text-center text-gray-500">
+        У цій колекції поки немає товарів
+      </p>
+    <% end %>
+
+  </div>
+</section>

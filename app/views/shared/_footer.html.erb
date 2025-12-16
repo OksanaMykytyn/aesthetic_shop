@@ -1,0 +1,71 @@
+<footer class="border-t border-black">
+  <div class="container py-12">
+
+    <div
+      class="grid gap-8
+             grid-cols-1
+             sm:grid-cols-2
+             lg:grid-cols-4"
+    >
+
+      <div>
+        <h3 class="text-sm font-semibold mb-4">
+          AESTHETIC
+        </h3>
+        <p class="text-sm leading-relaxed">
+          Інтернет-магазин канцелярських товарів для роботи,
+          навчання та творчості.
+        </p>
+      </div>
+
+      <div>
+        <h3 class="text-sm font-semibold mb-4">
+          Категорії
+        </h3>
+        <ul class="flex flex-col gap-2 text-sm">
+          <% Category.limit(5).each do |category| %>
+            <li>
+              <%= link_to category.name,
+                  category_path(category),
+                  class: "footer-link" %>
+            </li>
+          <% end %>
+          <li>
+            <%= link_to "Усі категорії",
+                categories_path,
+                class: "footer-link font-semibold" %>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-sm font-semibold mb-4">
+          Інформація
+        </h3>
+        <ul class="flex flex-col gap-2 text-sm">
+          <li><a href="#" class="footer-link">Політика конфіденційності</a></li>
+          <li><a href="#" class="footer-link">Умови використання</a></li>
+          <li><a href="#" class="footer-link">Публічна оферта</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-sm font-semibold mb-4">
+          Соціальні мережі
+        </h3>
+        <div class="flex gap-4">
+          <a href="#" class="icon-btn"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" class="icon-btn"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" class="icon-btn"><i class="fa-brands fa-telegram"></i></a>
+          <a href="#" class="icon-btn"><i class="fa-brands fa-youtube"></i></a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="mt-12 text-center text-xs">
+      © <%= Time.current.year %> AESTHETIC. Усі права захищені.
+    </div>
+
+  </div>
+</footer>

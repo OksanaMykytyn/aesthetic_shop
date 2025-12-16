@@ -1,0 +1,54 @@
+<section class="py-12">
+  <div class="container">
+
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-xl">Товари</h1>
+
+      <%= link_to "Додати товар",
+          new_admin_product_path,
+          class: "primary-button" %>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+      <% @products.each do |product| %>
+        <div class="category-card border p-3">
+
+          <div class="aspect-square mb-3 overflow-hidden">
+            <% if product.images.attached? %>
+              <%= image_tag product.images.first,
+                class: "w-full h-full object-cover" %>
+            <% else %>
+              <div class="bg-gray-100 w-full h-full"></div>
+            <% end %>
+          </div>
+
+          <h3 class="text-sm text-center mb-1">
+            <%= product.title %>
+          </h3>
+
+          <p class="text-sm text-center mb-2">
+            <%= number_to_currency(product.price_cents / 100.0, unit: "₴") %>
+          </p>
+
+          <div class="flex justify-center gap-2 text-xs">
+            <%= link_to "Редагувати",
+                edit_admin_product_path(product),
+                class: "text-blue-600" %>
+
+            <%= button_to "Видалити",
+                admin_product_path(product),
+                method: :delete,
+                data: { confirm: "Ви впевнені?" },
+                class: "text-red-600" %>
+          </div>
+
+        </div>
+      <% end %>
+    </div>
+
+    <div class="mt-8 flex justify-center">
+          <%= paginate @products, theme: 'custom' %>
+    </div>
+
+  </div>
+</section>

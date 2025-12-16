@@ -1,0 +1,188 @@
+<section
+  class="w-full mt-0"
+  data-controller="slider"
+>
+  <div class="relative w-full h-[240px] overflow-hidden">
+
+    <div class="absolute inset-0 flex transition-transform duration-500"
+         data-slider-target="track">
+
+      <%= image_tag "https://i.pinimg.com/1200x/1d/cb/af/1dcbaf81add2b0a8756d157a3f17afb5.jpg",
+        class: "w-full h-full object-cover flex-shrink-0" %>
+
+      <%= image_tag "https://i.pinimg.com/736x/dd/53/7a/dd537a0ed91a9add8022d5f0ea082e94.jpg",
+        class: "w-full h-full object-cover flex-shrink-0" %>
+
+      <%= image_tag "https://i.pinimg.com/736x/4e/82/10/4e8210f675c037f21dccf982f77f3250.jpg",
+        class: "w-full h-full object-cover flex-shrink-0" %>
+    </div>
+
+    <div class="container absolute inset-0 flex items-center justify-between">
+
+      <button
+        class="slider-arrow"
+        data-action="click->slider#prev"
+      >
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+
+      <button
+        class="slider-arrow"
+        data-action="click->slider#next"
+      >
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <div class="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-2">
+      <button class="slider-dot"
+              data-action="click->slider#go"
+              data-index="0"
+              data-slider-target="dot"></button>
+
+      <button class="slider-dot"
+              data-action="click->slider#go"
+              data-index="1"
+              data-slider-target="dot"></button>
+
+      <button class="slider-dot"
+              data-action="click->slider#go"
+              data-index="2"
+              data-slider-target="dot"></button>
+    </div>
+  </div>
+</section>
+<section class="py-12">
+  <div class="container">
+
+    <h2 class="text-center text-xl mb-8">
+      Популярні категорії
+    </h2>
+
+    <div
+      class="grid gap-6 justify-center
+             grid-cols-1
+             sm:grid-cols-2
+             lg:grid-cols-4"
+    >
+      <% @popular_categories.each do |category| %>
+        <div class="category-card">
+
+          <div class="aspect-square w-full mb-4 overflow-hidden">
+            <% if category.photo.attached? %>
+              <%= image_tag category.photo,
+                class: "w-full h-full object-cover" %>
+            <% else %>
+              <div class="w-full h-full bg-gray-100"></div>
+            <% end %>
+          </div>
+
+          <h3 class="text-sm mb-4 text-center">
+            <%= category.name %>
+          </h3>
+
+          <a href="#"
+             class="primary-button w-full text-center">
+            Перейти
+          </a>
+        </div>
+      <% end %>
+    </div>
+
+  </div>
+</section>
+<section>
+  <div class="container">
+
+    <h2 class="text-center text-xl mb-8">
+      Популярні товари
+    </h2>
+
+    <div
+      class="grid gap-6 justify-center
+             grid-cols-1
+             sm:grid-cols-2
+             lg:grid-cols-4"
+    >
+      <% @popular_products.each do |product| %>
+        <div class="category-card">
+
+          <div class="aspect-square w-full mb-4 overflow-hidden">
+            <% if product.images.attached? %>
+              <%= image_tag product.images.first,
+                class: "w-full h-full object-cover" %>
+            <% else %>
+              <div class="w-full h-full bg-gray-100"></div>
+            <% end %>
+          </div>
+
+          <h3 class="text-sm mb-2 text-center">
+            <%= product.title %>
+          </h3>
+
+          <p class="text-sm mb-2">
+            <%= number_to_currency(product.price_cents / 100.0, unit: "₴") %>
+          </p>
+
+          <div class="flex gap-1 mb-4">
+            <% avg_rating = product.reviews.average(:rating)&.round || 0 %>
+
+            <% 5.times do |i| %>
+              <i class="fa-solid fa-star <%= i < avg_rating ? 'text-black' : 'text-gray-300' %>"></i>
+            <% end %>
+          </div>
+
+          <button class="primary-button w-full flex justify-center">
+            <i class="fa-solid fa-cart-plus"></i>
+          </button>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="flex justify-center mt-10">
+      <a href="#" class="primary-button">
+        Переглянути весь каталог
+      </a>
+    </div>
+
+  </div>
+</section>
+<section class="py-12">
+  <div class="container">
+
+    <h2 class="text-center text-xl mb-8">
+      Популярні колекції
+    </h2>
+
+    <div
+      class="grid gap-6 justify-center
+             grid-cols-1
+             sm:grid-cols-2
+             lg:grid-cols-4"
+    >
+      <% @popular_collections.each do |collection| %>
+        <div class="category-card">
+
+          <div class="aspect-square w-full mb-4 overflow-hidden">
+            <% if collection.photo.attached? %>
+              <%= image_tag collection.photo,
+                class: "w-full h-full object-cover" %>
+            <% else %>
+              <div class="w-full h-full bg-gray-100"></div>
+            <% end %>
+          </div>
+
+          <h3 class="text-sm mb-4 text-center">
+            <%= collection.name %>
+          </h3>
+
+          <a href="#"
+             class="primary-button w-full text-center">
+            Перейти
+          </a>
+        </div>
+      <% end %>
+    </div>
+
+  </div>
+</section>

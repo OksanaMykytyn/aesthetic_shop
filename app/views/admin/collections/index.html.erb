@@ -1,0 +1,43 @@
+<section class="py-12">
+  <div class="container max-w-3xl">
+
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-xl">Колекції</h1>
+
+      <%= link_to "Додати",
+          new_admin_collection_path,
+          class: "primary-button" %>
+    </div>
+
+    <table class="w-full text-sm border">
+      <thead>
+        <tr class="border-b">
+          <th class="p-2 text-left">Назва</th>
+          <th class="p-2">Товари</th>
+          <th class="p-2"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @collections.each do |collection| %>
+          <tr class="border-b">
+            <td class="p-2"><%= collection.name %></td>
+            <td class="p-2 text-center"><%= collection.products.count %></td>
+            <td class="p-2 text-right flex gap-2 justify-end">
+              <%= link_to "Редагувати",
+                  edit_admin_collection_path(collection),
+                  class: "text-blue-600" %>
+
+              <%= button_to "Видалити",
+                  admin_collection_path(collection),
+                  method: :delete,
+                  data: { confirm: "Ви впевнені?" },
+                  class: "text-red-600" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+  </div>
+</section>

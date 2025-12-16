@@ -1,0 +1,37 @@
+<div class="category-card">
+
+  <div class="aspect-square w-full mb-4 overflow-hidden">
+    <% if product.images.attached? %>
+      <%= image_tag product.images.first,
+        class: "w-full h-full object-cover" %>
+    <% else %>
+      <div class="w-full h-full bg-gray-100"></div>
+    <% end %>
+  </div>
+
+  <h3 class="text-sm mb-2 text-center">
+    <%= product.title %>
+  </h3>
+
+  <p class="text-sm mb-2 text-center">
+    <%= number_to_currency(product.price_cents / 100.0, unit: "₴") %>
+  </p>
+
+  <div class="flex gap-1 justify-center mb-4">
+    <% avg_rating = product.reviews.average(:rating)&.round || 0 %>
+
+    <% 5.times do |i| %>
+      <i class="fa-solid fa-star <%= i < avg_rating ? 'text-black' : 'text-gray-300' %>"></i>
+    <% end %>
+  </div>
+
+ <%= button_to add_item_cart_path(product),
+    method: :post,
+    form_class: "w-full",
+    class: "primary-button w-full flex justify-center" do %>
+  <i class="fa-solid fa-cart-plus"></i>
+<% end %>
+
+
+
+</div>

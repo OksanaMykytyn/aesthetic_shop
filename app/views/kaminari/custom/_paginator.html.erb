@@ -1,0 +1,16 @@
+<nav class="pagination flex items-center gap-2"> 
+  <% if @products.prev_page %> <%= link_to url_for(page: @products.prev_page), class: "pagination-link" do %> 
+  <i class="fa-solid fa-chevron-left"></i> <% end %> <% end %> 
+  <% paginator.each_page do |page| %> <% if page %> 
+  <% if page.current? %> 
+  <span class="pagination-link pagination-current">
+    <%= page.to_i %></span> <% else %> 
+    <%= link_to page, url_for(page: page), class: "pagination-link" %> 
+    <% end %> <% else %> 
+    <span class="pagination-ellipsis">…</span> 
+    <% end %> <% end %> 
+    <% if @products.next_page %> 
+    <%= link_to url_for(page: @products.next_page), class: "pagination-link" do %> 
+    <i class="fa-solid fa-chevron-right"></i> 
+    <% end %> <% end %> 
+    </nav>

@@ -1,0 +1,154 @@
+<section class="py-16 bg-white text-black">
+  <div class="container">
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+
+      <div class="border border-black p-3 aspect-square">
+        <% if @product.images.attached? %>
+          <%= image_tag @product.images.first,
+                class: "w-full h-full object-cover" %>
+        <% else %>
+          <div class="w-full h-full flex items-center justify-center text-sm">
+            Немає фото
+          </div>
+        <% end %>
+      </div>
+
+      <div>
+        <h1 class="text-xl mb-4">
+          <%= @product.title %>
+        </h1>
+
+        <p class="text-lg mb-4">
+          <%= number_to_currency(@product.price_cents / 100.0, unit: "₴") %>
+        </p>
+
+        <p class="text-sm mb-4">
+          Категорія:
+          <span class="font-semibold">
+            <%= @product.category.name %>
+          </span>
+        </p>
+
+        <% if @product.collections.any? %>
+          <p class="text-sm mb-6">
+            Колекції:
+            <%= @product.collections.map(&:name).join(", ") %>
+          </p>
+        <% end %>
+
+        <div class="flex gap-1 mb-6">
+          <% avg = @product.reviews.average(:rating)&.round || 0 %>
+          <% 5.times do |i| %>
+            <i class="fa-solid fa-star <%= i < avg ? 'text-black' : 'text-gray-300' %>"></i>
+          <% end %>
+        </div>
+
+<%= button_to add_item_cart_path(@product),
+    method: :post,
+    class: "primary-button w-full flex justify-center" do %>
+  <i class="fa-solid fa-cart-plus"></i>
+<% end %>
+
+
+      </div>
+    </div>
+
+    <div>
+      <h2 class="text-lg mb-6">
+        Відгуки
+      </h2>
+
+      <% if @reviews.any? %>
+        <div class="space-y-6">
+          <% @reviews.each do |review| %>
+            <div class="border border-black p-4">
+              <div class="flex justify-between mb-2">
+                <p class="text-sm font-semibold">
+                  <%= review.user.first_name %>
+                </p>
+                <div class="flex gap-1">
+                  <% 5.times do |i| %>
+                    <i class="fa-solid fa-star <%= i < review.rating ? 'text-black' : 'text-gray-300' %>"></i>
+                  <% end %>
+                </div>
+              </div>
+
+              <% if review.comment.present? %>
+                <p class="text-sm">
+                  <%= review.comment %>
+                </p>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="text-sm">
+          Поки що відгуків немає.
+        </p>
+      <% end %>
+    </div>
+<% if user_signed_in? %>
+  <div class="mt-12 border border-black p-6">
+    <h3 class="text-lg mb-4">
+      Залишити відгук
+    </h3>
+
+    <%= form_with model: [@product, @review], local: true do |f| %>
+
+     <div class="mb-4">
+  <p class="text-sm mb-2">Оцінка</p>
+
+  <div class="flex flex-row-reverse justify-end gap-1 rating">
+    <% 5.downto(1) do |star| %>
+      <input
+        type="radio"
+        name="review[rating]"
+        id="star-<%= star %>"
+        value="<%= star %>"
+        class="hidden"
+      />
+
+      <label for="star-<%= star %>" class="cursor-pointer">
+        <i class="fa-solid fa-star text-gray-300"></i>
+      </label>
+    <% end %>
+  </div>
+
+  <% if @review.errors[:rating].any? %>
+    <p class="text-sm text-red-600 mt-1">
+      <%= @review.errors[:rating].first %>
+    </p>
+  <% end %>
+</div>
+
+      <div class="mb-4">
+        <%= f.text_area :comment,
+            rows: 4,
+            placeholder: "Ваш відгук...",
+            class: "w-full border border-black p-2 text-sm focus:outline-none" %>
+
+        <% if @review.errors[:comment].any? %>
+          <p class="text-sm text-red-600 mt-1">
+            <%= @review.errors[:comment].first %>
+          </p>
+        <% end %>
+      </div>
+
+      <%= f.submit "Надіслати відгук",
+            class: "primary-button w-full" %>
+
+    <% end %>
+  </div>
+<% else %>
+  <p class="text-sm mt-8">
+    Щоб залишити відгук,
+    <%= link_to "увійдіть", new_user_session_path, class: "underline" %>
+    або
+    <%= link_to "зареєструйтесь", new_user_registration_path, class: "underline" %>
+  </p>
+<% end %>
+
+  </div>
+  
+</section>

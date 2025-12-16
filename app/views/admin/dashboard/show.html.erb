@@ -1,0 +1,46 @@
+<section class="py-16 bg-white text-black">
+  <div class="container max-w-md text-center space-y-8">
+
+    <h1 class="text-xl">
+      Адмін-панель
+    </h1>
+
+    <div class="profile-avatar mx-auto">
+      <%= image_tag(
+        @user.avatar.attached? ? url_for(@user.avatar) :
+        "https://i.pinimg.com/736x/eb/c4/3a/ebc43a1259ea5962db33ec79b8842719.jpg",
+        class: "avatar-image"
+      ) %>
+    </div>
+
+    <p class="text-lg font-medium">
+      <%= @user.first_name %> <%= @user.last_name %>
+    </p>
+
+    <div class="space-y-4">
+<%= link_to "Замовлення",
+    admin_orders_path,
+    class: "primary-button w-full" %>
+
+      <%= link_to "Категорії",
+          admin_categories_path,
+          class: "primary-button w-full py-3 text-center" %>
+          <%= link_to "Колекції",
+        admin_collections_path,
+        class: "primary-button w-full" %>
+        <%= link_to "Товари",
+        admin_products_path,
+        class: "primary-button w-full" %>
+        <%= link_to "Відгуки",
+        admin_reviews_path,
+        class: "primary-button w-full" %>
+
+      <%= button_to "Вийти",
+          destroy_user_session_path,
+          method: :delete,
+          class: "w-full py-3 border border-black text-black text-sm hover:bg-black hover:text-white" %>
+
+    </div>
+
+  </div>
+</section>

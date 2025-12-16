@@ -1,0 +1,58 @@
+<form method="get" class="flex flex-col gap-6">
+
+  <div>
+    <h3 class="text-sm font-semibold mb-2">Категорії</h3>
+    <% @categories.each do |category| %>
+      <label class="flex items-center gap-2 text-sm">
+        <input type="checkbox" name="categories[]"
+               value="<%= category.id %>"
+               <%= "checked" if params[:categories]&.include?(category.id.to_s) %>>
+        <%= category.name %>
+      </label>
+    <% end %>
+  </div>
+
+  <div>
+    <h3 class="text-sm font-semibold mb-2">Колекції</h3>
+    <% @collections.each do |collection| %>
+      <label class="flex items-center gap-2 text-sm">
+        <input type="checkbox" name="collections[]"
+               value="<%= collection.id %>"
+               <%= "checked" if params[:collections]&.include?(collection.id.to_s) %>>
+        <%= collection.name %>
+      </label>
+    <% end %>
+  </div>
+
+  <div>
+    <h3 class="text-sm font-semibold mb-2">Ціна</h3>
+    <input type="number" name="price_from"
+           placeholder="Від"
+           class="search-input mb-2">
+    <input type="number" name="price_to"
+           placeholder="До"
+           class="search-input">
+  </div>
+
+  <div>
+    <h3 class="text-sm font-semibold mb-2">Рейтинг</h3>
+    <% (1..5).each do |r| %>
+      <label class="flex items-center gap-2 text-sm">
+        <input type="checkbox" name="ratings[]" value="<%= r %>">
+        <%= r %> зірок
+      </label>
+    <% end %>
+  </div>
+
+  <div class="flex gap-4 mt-4">
+    <button class="primary-button w-full">
+      Застосувати
+    </button>
+
+    <a href="/catalog"
+       class="primary-button w-full text-center">
+      Скинути
+    </a>
+  </div>
+
+</form>

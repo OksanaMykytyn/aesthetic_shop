@@ -1,0 +1,11 @@
+import { application } from "./application";
+import MobileMenuController from "./mobile_menu_controller";
+import SliderController from "./slider_controller";
+import FilterController from "./filter_controller";
+import PasswordController from "./password_controller";
+import FormErrorsController from "./form_errors_controller";
+application.register("form-errors", FormErrorsController);
+application.register("password", PasswordController);
+application.register("filter", FilterController);
+application.register("mobile-menu", MobileMenuController);
+application.register("slider", SliderController);

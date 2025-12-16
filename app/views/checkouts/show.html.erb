@@ -1,0 +1,149 @@
+<section class="py-16 bg-white text-black">
+  <div class="container max-w-4xl">
+
+    <h1 class="text-xl mb-8 text-center">
+      Оформлення замовлення
+    </h1>
+
+    <div class="mb-8 border border-black p-4 text-sm">
+      <% @items.each do |item| %>
+        <div class="flex justify-between mb-2">
+          <span>
+            <%= item.product.title %> × <%= item.quantity %>
+          </span>
+          <span>
+            <%= number_to_currency(
+              item.product.price_cents * item.quantity / 100.0,
+              unit: "₴"
+            ) %>
+          </span>
+        </div>
+      <% end %>
+
+      <div class="border-t border-black mt-4 pt-4 flex justify-between font-semibold">
+        <span>Разом</span>
+        <span>
+          <%= number_to_currency(
+            @items.sum { |i| i.product.price_cents * i.quantity } / 100.0,
+            unit: "₴"
+          ) %>
+        </span>
+      </div>
+    </div>
+
+    <%= form_with url: checkout_path, method: :post, local: true do %>
+
+      <div class="mb-10">
+        <h2 class="text-lg mb-4">Дані одержувача</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <input
+            type="text"
+            name="order[shipping_address][first_name]"
+            placeholder="Імʼя"
+            class="search-input w-full"
+          >
+
+          <input
+            type="text"
+            name="order[shipping_address][last_name]"
+            placeholder="Прізвище"
+            class="search-input w-full"
+          >
+        </div>
+
+        <input
+          type="text"
+          name="order[shipping_address][phone]"
+          placeholder="Номер телефону"
+          class="search-input w-full mt-4"
+        >
+
+        <input
+          type="email"
+          name="order[shipping_address][email]"
+          placeholder="Email (за бажанням)"
+          class="search-input w-full mt-4"
+        >
+      </div>
+
+      <div class="mb-10">
+        <h2 class="text-lg mb-4">Оплата</h2>
+
+        <label class="flex items-center gap-2 mb-2 text-sm">
+          <input type="radio" name="order[payment_method]" value="cod">
+          Оплата при отриманні
+        </label>
+
+        <label class="flex items-center gap-2 text-sm">
+          <input type="radio" name="order[payment_method]" value="online">
+          Онлайн-оплата (Stripe)
+        </label>
+      </div>
+
+      <div class="mb-10">
+        <h2 class="text-lg mb-4">Доставка</h2>
+
+        <select
+          name="order[shipping_address][delivery_type]"
+          class="search-input w-full mb-4"
+        >
+          <option value="">Оберіть тип доставки</option>
+          <option value="branch">У відділення</option>
+          <option value="postomat">У поштомат</option>
+          <option value="courier">Курʼєром</option>
+        </select>
+
+        <select
+          name="order[shipping_address][carrier]"
+          class="search-input w-full mb-4"
+        >
+          <option value="">Оберіть пошту</option>
+          <option value="nova_poshta">Нова Пошта</option>
+          <option value="ukrposhta">Укрпошта</option>
+        </select>
+
+        <input
+          type="text"
+          name="order[shipping_address][city]"
+          placeholder="Місто"
+          class="search-input w-full mb-4"
+        >
+
+        <input
+          type="text"
+          name="order[shipping_address][postal_code]"
+          placeholder="Поштовий індекс"
+          class="search-input w-full mb-4"
+        >
+
+        <input
+          type="text"
+          name="order[shipping_address][branch_number]"
+          placeholder="№ відділення / поштомату"
+          class="search-input w-full mb-4"
+        >
+
+        <input
+          type="text"
+          name="order[shipping_address][street]"
+          placeholder="Вулиця"
+          class="search-input w-full mb-4"
+        >
+
+        <input
+          type="text"
+          name="order[shipping_address][house]"
+          placeholder="Будинок"
+          class="search-input w-full"
+        >
+      </div>
+
+      <button class="primary-button w-full flex justify-center">
+        Підтвердити замовлення
+      </button>
+
+    <% end %>
+
+  </div>
+</section>

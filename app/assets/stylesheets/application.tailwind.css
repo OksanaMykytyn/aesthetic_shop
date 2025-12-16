@@ -1,0 +1,224 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-size: 16px;
+  }
+
+  body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+      Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  a {
+    color: black;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+}
+
+@layer components {
+  .container {
+    width: calc(100vw - 32px) !important;
+    max-width: 1040px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+  }
+
+  .icon-btn i {
+    font-size: 1rem;
+  }
+
+  .icon-btn:hover {
+    background-color: black;
+    border-radius: 9999px;
+  }
+
+  .icon-btn:hover i {
+    color: white;
+  }
+
+  .nav-link {
+    font-size: 0.875rem;
+  }
+}
+
+@layer components {
+  .slider-arrow {
+    width: 40px;
+    height: 40px;
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .slider-arrow i {
+    color: white;
+    font-size: 1rem;
+  }
+
+  .slider-dot {
+    width: 8px;
+    height: 8px;
+    border: 1px solid black;
+    background-color: white;
+  }
+
+  .slider-dot.active {
+    background-color: black;
+  }
+}
+
+@layer components {
+  .primary-button {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: black;
+    color: white;
+    border: 1px solid black;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+  }
+
+  .primary-button:hover {
+    background-color: white;
+    color: black;
+  }
+}
+
+@layer components {
+  .category-card {
+    border: 1px solid black;
+    padding: 0.75rem; /* 12px */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@layer components {
+  .category-card i.fa-star {
+    font-size: 0.75rem;
+  }
+}
+
+@layer components {
+  .footer-link {
+    color: black;
+  }
+
+  .footer-link:hover {
+    text-decoration: underline;
+  }
+}
+
+@layer components {
+  .search-input {
+    border: 1px solid black;
+    padding: 0.5rem;
+    font-size: 0.875rem;
+    background: white;
+    color: black;
+    width: 100%;
+  }
+
+  .pagination {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .pagination a,
+  .pagination span {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+  }
+
+  .pagination .current {
+    background: black;
+    color: white;
+  }
+
+  .pagination a {
+    border: 1px solid black;
+    color: black;
+  }
+}
+
+@layer components {
+  aside {
+    background: white;
+  }
+
+  .pagination {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .pagination a,
+  .pagination span {
+    width: 32px;
+    height: 32px;
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+  }
+
+  .pagination .pagination-current {
+    background: black;
+    color: white;
+  }
+}
+
+.input-error {
+  border-color: red;
+}
+
+.error-text {
+  color: red;
+  font-size: 0.75rem;
+  margin-top: 1px;
+}
+
+.profile-avatar {
+  width: 180px;
+  height: 180px;
+  padding: 12px;
+  border: 1px solid #000;
+}
+
+.avatar-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.rating input:checked ~ label i,
+.rating label:hover i,
+.rating label:hover ~ label i {
+  color: black;
+}
+
+.rating i {
+  transition: color 0.2s ease;
+}

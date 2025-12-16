@@ -1,0 +1,75 @@
+<section class="py-12">
+  <div class="container max-w-4xl">
+
+    <div class="mb-6">
+      <h1 class="text-xl mb-1">
+        Замовлення № <%= @order.number %>
+      </h1>
+
+      <p class="text-sm text-gray-500">
+        Статус: <%= @order.status.humanize %>
+      </p>
+    </div>
+
+    <div class="mb-8">
+      <h2 class="text-lg mb-4">Товари</h2>
+
+      <table class="w-full text-sm border">
+        <thead>
+          <tr class="border-b bg-gray-50">
+            <th class="p-3 text-left">Товар</th>
+            <th class="p-3 text-center">К-сть</th>
+            <th class="p-3 text-right">Ціна</th>
+            <th class="p-3 text-right">Сума</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @order_items.each do |item| %>
+            <tr class="border-b">
+              <td class="p-3">
+                <%= item.product_title || item.product&.title %>
+              </td>
+
+              <td class="p-3 text-center">
+                <%= item.quantity %>
+              </td>
+
+              <td class="p-3 text-right">
+                <%= number_to_currency(item.unit_price_cents / 100.0, unit: "₴") %>
+              </td>
+
+              <td class="p-3 text-right">
+                <%= number_to_currency(item.total_price_cents / 100.0, unit: "₴") %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mb-6">
+      <h2 class="text-lg mb-2">Адреса доставки</h2>
+
+      <% if @order.shipping_address.present? %>
+        <p class="text-sm">
+          <%= @order.shipping_address["recipient_name"] %><br>
+          <%= @order.shipping_address["city"] %>,
+          <%= @order.shipping_address["street"] %>
+        </p>
+      <% else %>
+        <p class="text-sm text-gray-500">Адреса не вказана</p>
+      <% end %>
+    </div>
+
+    <div class="border-t pt-4 text-right">
+      <p class="text-sm">
+        Загальна сума:
+        <strong>
+          <%= number_to_currency(@order.total_cents / 100.0, unit: "₴") %>
+        </strong>
+      </p>
+    </div>
+
+  </div>
+</section>

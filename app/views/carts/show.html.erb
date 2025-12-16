@@ -1,0 +1,84 @@
+<section class="py-16 bg-white text-black">
+  <div class="container max-w-4xl">
+
+    <h1 class="text-xl mb-12 text-center">
+      Кошик
+    </h1>
+
+    <% if @items.any? %>
+      <div class="space-y-6 mb-12">
+        <% total = 0 %>
+
+        <% @items.each do |item| %>
+          <% product = item.product %>
+          <% sum = product.price_cents * item.quantity %>
+          <% total += sum %>
+
+          <div class="border border-black p-4 flex gap-6">
+
+            <div class="w-24 h-24 border border-black p-2">
+              <% if product.images.attached? %>
+                <%= image_tag product.images.first,
+                  class: "w-full h-full object-cover" %>
+              <% end %>
+            </div>
+
+            <div class="flex-1">
+              <p class="text-sm font-semibold mb-2">
+                <%= product.title %>
+              </p>
+
+              <p class="text-sm mb-2">
+                <%= number_to_currency(product.price_cents / 100.0, unit: "₴") %>
+              </p>
+
+              <div class="flex items-center gap-2">
+                <%= form_with url: update_item_cart_path(user_signed_in? ? item.id : product.id),
+                  method: :patch,
+                  local: true do %>
+                  <input
+                    type="number"
+                    name="quantity"
+                    value="<%= item.quantity %>"
+                    min="1"
+                    class="border border-black w-20 px-2 py-1 text-sm"
+                    onchange="this.form.submit()" 
+                  >
+                <% end %>
+                
+                <%= button_to remove_item_cart_path(user_signed_in? ? item.id : product.id),
+                  method: :delete,
+                  class: "border border-black px-3 py-1 text-sm hover:bg-black hover:text-white" do %>
+                  ✕
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="border-t border-black pt-6 flex justify-between items-center">
+        <p class="text-lg">
+          Разом:
+        </p>
+        <p class="text-lg font-semibold">
+          <%= number_to_currency(total / 100.0, unit: "₴") %>
+        </p>
+      </div>
+
+      <div class="mt-8 text-right">
+        <%= link_to checkout_path,
+    class: "primary-button w-full flex justify-center mt-6" do %>
+  Оформити замовлення
+<% end %>
+
+      </div>
+
+    <% else %>
+      <p class="text-center text-sm">
+        Ваш кошик порожній
+      </p>
+    <% end %>
+
+  </div>
+</section>

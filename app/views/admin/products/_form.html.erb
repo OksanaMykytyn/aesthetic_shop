@@ -1,0 +1,36 @@
+<%= form_with model: [:admin, @product], local: true do |f| %>
+
+  <%= f.label :title, "Назва" %>
+  <%= f.text_field :title, class: "w-full border p-2" %>
+
+  <%= f.label :description, "Опис" %>
+  <%= f.text_area :description, rows: 4, class: "w-full border p-2" %>
+
+  <%= f.label :price_cents, "Ціна (у копійках)" %>
+  <%= f.number_field :price_cents, class: "w-full border p-2" %>
+
+  <%= f.label :stock, "Кількість" %>
+  <%= f.number_field :stock, class: "w-full border p-2" %>
+
+  <%= f.label :category_id, "Категорія" %>
+  <%= f.collection_select :category_id,
+      @categories, :id, :name,
+      {}, class: "w-full border p-2" %>
+
+  <%= f.label :collection_ids, "Колекції" %>
+  <div class="border p-2 max-h-40 overflow-y-auto space-y-2">
+    <%= f.collection_check_boxes :collection_ids, @collections, :id, :name do |b| %>
+      <label class="flex gap-2 text-sm">
+        <%= b.check_box %>
+        <%= b.text %>
+      </label>
+    <% end %>
+  </div>
+
+  <%= f.label :images, "Зображення" %>
+  <%= f.file_field :images, multiple: true %>
+
+  <%= f.submit "Зберегти",
+      class: "primary-button w-full mt-4" %>
+
+<% end %>
