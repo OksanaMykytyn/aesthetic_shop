@@ -1,4 +1,11 @@
 uk:
+  orders:
+    statuses:
+      new_order: "Створено"
+      processing: "В обробці"
+      shipped: "Відправлено"
+      completed: "Завершено"
+      cancelled: "Скасовано"
   time:
     formats:
       short: "%d.%m.%Y %H:%M"
@@ -8,3 +15,13 @@ uk:
     formats:
       short: "%d.%m.%Y"
       long: "%d %B %Y"
+  activerecord:
+    errors:
+      messages:
+        restrict_dependent_destroy:
+          has_many: "Неможливо видалити запис, оскільки існують залежні %{record}."
+          has_one: "Неможливо видалити запис, оскільки існує залежний %{record}."
+      models:
+        category:
+          restrict_dependent_destroy:
+            has_many: "Неможливо видалити категорію, оскільки існують пов'язані продукти."

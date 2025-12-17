@@ -1,11 +1,11 @@
-<section class="py-12">
+<section class="py-12 bg-white">
   <div class="container max-w-md space-y-6">
 
-    <h1 class="text-xl">
+    <h1 class="text-xl font-medium">
       Створення категорії
     </h1>
 
-    <%= form_with model: [:admin, @category], local: true do |f| %>
+    <%= form_with model: [:admin, @category], local: true, class: "space-y-5" do |f| %>
 
       <div>
         <%= f.label :name, "Назва", class: "block text-sm mb-1" %>
@@ -23,7 +23,7 @@
 
       <div>
         <%= f.label :photo, "Зображення", class: "block text-sm mb-1" %>
-        <%= f.file_field :photo %>
+        <%= f.file_field :photo, class: "text-sm" %>
       </div>
 
       <div>
@@ -32,10 +32,10 @@
         </h3>
 
         <p class="text-xs text-gray-500 mb-2">
-          (можна залишити порожнім)
+          (необовʼязково)
         </p>
 
-        <div class="space-y-2 max-h-48 overflow-y-auto border p-2">
+        <div class="max-h-48 overflow-y-auto border border-black p-2 space-y-2">
           <%= f.collection_check_boxes :product_ids, Product.all, :id, :title do |b| %>
             <label class="flex gap-2 items-center text-sm">
               <%= b.check_box %>
@@ -47,11 +47,13 @@
 
       <div class="flex gap-4 pt-4">
         <%= f.submit "Створити",
-            class: "primary-button w-full" %>
+            class: "w-full border border-black py-3 text-sm
+                   hover:bg-black hover:text-white transition" %>
 
         <%= link_to "Скасувати",
             admin_categories_path,
-            class: "w-full text-center border border-black py-3 hover:bg-black hover:text-white" %>
+            class: "w-full text-center border border-black py-3 text-sm
+                   hover:bg-black hover:text-white transition" %>
       </div>
 
     <% end %>

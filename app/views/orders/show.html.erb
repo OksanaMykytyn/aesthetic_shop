@@ -6,8 +6,8 @@
         Замовлення № <%= @order.number %>
       </h1>
 
-      <p class="text-sm text-gray-500">
-        Статус: <%= @order.status.humanize %>
+      <p class="text-sm text-gray-600">
+        Статус: <%= @order.human_status %>
       </p>
     </div>
 
@@ -51,15 +51,10 @@
     <div class="mb-6">
       <h2 class="text-lg mb-2">Адреса доставки</h2>
 
-      <% if @order.shipping_address.present? %>
-        <p class="text-sm">
-          <%= @order.shipping_address["recipient_name"] %><br>
-          <%= @order.shipping_address["city"] %>,
-          <%= @order.shipping_address["street"] %>
-        </p>
-      <% else %>
-        <p class="text-sm text-gray-500">Адреса не вказана</p>
-      <% end %>
+      <p class="text-sm">
+  <%= @order.delivery_address_text %>
+</p>
+
     </div>
 
     <div class="border-t pt-4 text-right">

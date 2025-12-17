@@ -11,8 +11,12 @@
           <span class="text-sm">Статус:</span>
 
           <%= f.select :status,
-Order.statuses.keys,
-              {}, class: "border p-2" %>
+  Order.statuses.keys.map { |status|
+    [I18n.t("orders.statuses.#{status}"), status]
+  },
+  {},
+  class: "border border-black p-2 text-sm" %>
+
 
           <%= f.submit "Змінити",
               class: "primary-button" %>
@@ -27,14 +31,14 @@ Order.statuses.keys,
       <p class="text-sm"><%= @order.user.phone_number %></p>
     </div>
 
-    <div class="border p-4">
-      <h2 class="text-sm font-medium mb-2">Адреса доставки</h2>
-      <% @order.shipping_address.each do |key, value| %>
-        <p class="text-sm">
-          <strong><%= key.humanize %>:</strong> <%= value %>
-        </p>
-      <% end %>
-    </div>
+    <div class="border border-black p-4 mb-8">
+  <h2 class="text-sm font-semibold mb-2">Адреса доставки</h2>
+
+  <p class="text-sm">
+    <%= @order.delivery_address_text %>
+  </p>
+</div>
+
 
     <div class="border p-4">
       <h2 class="text-sm font-medium mb-4">Товари</h2>

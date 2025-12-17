@@ -1,7 +1,7 @@
 # db/seeds.rb
 require "open-uri"
 
-IMAGE_URL = "https://i.pinimg.com/736x/9f/10/7a/9f107a5735298aed8a968b6fb0c7481d.jpg"
+IMAGE_URL = "https://i.pinimg.com/736x/de/ee/54/deee549159e45df5677998418f29a877.jpg"
 
 puts "Cleaning DB..."
 # Be careful in production!

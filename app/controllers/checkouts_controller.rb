@@ -30,7 +30,35 @@ class CheckoutsController < ApplicationController
       cart.update(status: "completed")
       current_user.carts.create!(status: "active")
 
-      redirect_to root_path, notice: "Замовлення оформлено ✅"
+      if order.payment_method == "online"
+  items = cart.cart_items.to_a
+
+cart.update(status: "completed")
+current_user.carts.create!(status: "active")
+
+session = Stripe::Checkout::Session.create(
+  line_items: items.map do |item|
+    {
+      price_data: {
+        currency: "uah",
+        product_data: { name: item.product.title },
+        unit_amount: item.product.price_cents
+      },
+      quantity: item.quantity
+    }
+  end,
+  mode: "payment",
+  success_url: orders_url,
+  cancel_url: checkout_url
+)
+
+
+  redirect_to session.url, allow_other_host: true
+else
+  redirect_to orders_path, notice: "Замовлення оформлено"
+end
+
+
     else
       @cart = cart
       @items = cart.cart_items.includes(:product)

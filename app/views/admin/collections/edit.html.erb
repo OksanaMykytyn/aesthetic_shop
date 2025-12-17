@@ -1,37 +1,69 @@
-<section class="py-12">
+<section class="py-12 bg-white">
   <div class="container max-w-md space-y-6">
 
-    <h1 class="text-xl">Редагування колекції</h1>
+    <h1 class="text-xl font-medium">
+      Редагування колекції
+    </h1>
 
-    <%= form_with model: [:admin, @collection], local: true do |f| %>
+    <%= form_with model: [:admin, @collection],
+                  local: true,
+                  class: "space-y-5" do |f| %>
 
-      <%= f.label :name, "Назва" %>
-      <%= f.text_field :name,
-          class: "w-full border border-black p-2" %>
-
-      <%= f.label :description, "Опис" %>
-      <%= f.text_area :description,
-          rows: 4,
-          class: "w-full border border-black p-2" %>
-
-      <%= f.label :photo, "Зображення" %>
-      <%= f.file_field :photo %>
-
-      <h3 class="mt-4 mb-2 font-medium">
-        Товари в колекції
-      </h3>
-
-      <div class="space-y-2 max-h-48 overflow-y-auto border p-2">
-        <%= f.collection_check_boxes :product_ids, @products, :id, :title do |b| %>
-          <label class="flex gap-2 items-center text-sm">
-            <%= b.check_box %>
-            <%= b.text %>
-          </label>
-        <% end %>
+      <div>
+        <%= f.label :name, "Назва", class: "block text-sm mb-1" %>
+        <%= f.text_field :name,
+            class: "w-full border border-black p-2",
+            required: true %>
       </div>
 
-      <%= f.submit "Зберегти",
-          class: "primary-button w-full mt-4" %>
+      <div>
+        <%= f.label :description, "Опис", class: "block text-sm mb-1" %>
+        <%= f.text_area :description,
+            rows: 4,
+            class: "w-full border border-black p-2" %>
+      </div>
+
+      <% if @collection.photo.attached? %>
+        <div>
+          <p class="text-sm mb-1">Поточне зображення</p>
+          <%= image_tag @collection.photo,
+              class: "w-full max-h-48 object-cover border border-black" %>
+        </div>
+      <% end %>
+
+      <div>
+        <%= f.label :photo, "Змінити зображення", class: "block text-sm mb-1" %>
+        <%= f.file_field :photo, class: "text-sm" %>
+        <p class="text-xs text-gray-500 mt-1">
+          Якщо не обрати нове — поточне збережеться
+        </p>
+      </div>
+
+      <div>
+        <h3 class="text-sm font-medium mt-4 mb-2">
+          Товари в колекції
+        </h3>
+
+        <div class="max-h-48 overflow-y-auto border border-black p-2 space-y-2">
+          <%= f.collection_check_boxes :product_ids, @products, :id, :title do |b| %>
+            <label class="flex gap-2 items-center text-sm">
+              <%= b.check_box %>
+              <%= b.text %>
+            </label>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="flex gap-4 pt-4">
+        <%= f.submit "Зберегти",
+            class: "w-full border border-black py-3 text-sm
+                   hover:bg-black hover:text-white transition" %>
+
+        <%= link_to "Скасувати",
+            admin_collections_path,
+            class: "w-full text-center border border-black py-3 text-sm
+                   hover:bg-black hover:text-white transition" %>
+      </div>
 
     <% end %>
 

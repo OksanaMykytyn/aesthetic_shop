@@ -1,0 +1,24 @@
+<div class="category-card">
+
+  <%= link_to category_path(category), class: "block" do %>
+
+    <div class="aspect-square w-full mb-4 overflow-hidden">
+      <% if category.photo.attached? %>
+        <%= image_tag category.photo,
+          class: "w-full h-full object-cover" %>
+      <% else %>
+        <div class="w-full h-full bg-gray-100"></div>
+      <% end %>
+    </div>
+
+    <h3 class="text-sm mb-4 text-center hover:underline">
+      <%= category.name %>
+    </h3>
+
+  <% end %>
+
+  <%= link_to "Перейти",
+      category_path(category),
+      class: "primary-button w-full text-center block" %>
+
+</div>

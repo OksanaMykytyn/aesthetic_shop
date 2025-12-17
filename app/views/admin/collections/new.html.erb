@@ -1,42 +1,61 @@
-<section class="py-12">
+<section class="py-12 bg-white">
   <div class="container max-w-md space-y-6">
 
-    <h1 class="text-xl">Створення колекції</h1>
+    <h1 class="text-xl font-medium">
+      Створення колекції
+    </h1>
 
-    <%= form_with model: [:admin, @collection], local: true do |f| %>
+    <%= form_with model: [:admin, @collection],
+                  local: true,
+                  class: "space-y-5" do |f| %>
 
-      <%= f.label :name, "Назва" %>
-      <%= f.text_field :name,
-          class: "w-full border border-black p-2",
-          required: true %>
+      <div>
+        <%= f.label :name, "Назва", class: "block text-sm mb-1" %>
+        <%= f.text_field :name,
+            class: "w-full border border-black p-2",
+            required: true %>
+      </div>
 
-      <%= f.label :description, "Опис" %>
-      <%= f.text_area :description,
-          rows: 4,
-          class: "w-full border border-black p-2" %>
+      <div>
+        <%= f.label :description, "Опис", class: "block text-sm mb-1" %>
+        <%= f.text_area :description,
+            rows: 4,
+            class: "w-full border border-black p-2" %>
+      </div>
 
-      <%= f.label :photo, "Зображення" %>
-      <%= f.file_field :photo %>
+      <div>
+        <%= f.label :photo, "Зображення", class: "block text-sm mb-1" %>
+        <%= f.file_field :photo, class: "text-sm" %>
+      </div>
 
-      <h3 class="mt-4 mb-2 font-medium">
-        Додати товари до колекції
-      </h3>
+      <div>
+        <h3 class="text-sm font-medium mt-4 mb-2">
+          Додати товари до колекції
+        </h3>
 
-      <div class="space-y-2 max-h-48 overflow-y-auto border p-2">
-        <%= f.collection_check_boxes :product_ids, @products, :id, :title do |b| %>
-          <label class="flex gap-2 items-center text-sm">
-            <%= b.check_box %>
-            <%= b.text %>
-          </label>
-        <% end %>
+        <p class="text-xs text-gray-500 mb-2">
+          (необовʼязково)
+        </p>
+
+        <div class="max-h-48 overflow-y-auto border border-black p-2 space-y-2">
+          <%= f.collection_check_boxes :product_ids, @products, :id, :title do |b| %>
+            <label class="flex gap-2 items-center text-sm">
+              <%= b.check_box %>
+              <%= b.text %>
+            </label>
+          <% end %>
+        </div>
       </div>
 
       <div class="flex gap-4 pt-4">
-        <%= f.submit "Створити", class: "primary-button w-full" %>
+        <%= f.submit "Створити",
+            class: "w-full border border-black py-3 text-sm
+                   hover:bg-black hover:text-white transition" %>
 
         <%= link_to "Скасувати",
             admin_collections_path,
-            class: "w-full text-center border border-black py-3 hover:bg-black hover:text-white" %>
+            class: "w-full text-center border border-black py-3 text-sm
+                   hover:bg-black hover:text-white transition" %>
       </div>
 
     <% end %>

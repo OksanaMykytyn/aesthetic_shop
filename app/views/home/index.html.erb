@@ -66,27 +66,9 @@
              lg:grid-cols-4"
     >
       <% @popular_categories.each do |category| %>
-        <div class="category-card">
+  <%= render "categories/card", category: category %>
+<% end %>
 
-          <div class="aspect-square w-full mb-4 overflow-hidden">
-            <% if category.photo.attached? %>
-              <%= image_tag category.photo,
-                class: "w-full h-full object-cover" %>
-            <% else %>
-              <div class="w-full h-full bg-gray-100"></div>
-            <% end %>
-          </div>
-
-          <h3 class="text-sm mb-4 text-center">
-            <%= category.name %>
-          </h3>
-
-          <a href="#"
-             class="primary-button w-full text-center">
-            Перейти
-          </a>
-        </div>
-      <% end %>
     </div>
 
   </div>
@@ -105,44 +87,16 @@
              lg:grid-cols-4"
     >
       <% @popular_products.each do |product| %>
-        <div class="category-card">
+  <%= render "products/card", product: product %>
+<% end %>
 
-          <div class="aspect-square w-full mb-4 overflow-hidden">
-            <% if product.images.attached? %>
-              <%= image_tag product.images.first,
-                class: "w-full h-full object-cover" %>
-            <% else %>
-              <div class="w-full h-full bg-gray-100"></div>
-            <% end %>
-          </div>
-
-          <h3 class="text-sm mb-2 text-center">
-            <%= product.title %>
-          </h3>
-
-          <p class="text-sm mb-2">
-            <%= number_to_currency(product.price_cents / 100.0, unit: "₴") %>
-          </p>
-
-          <div class="flex gap-1 mb-4">
-            <% avg_rating = product.reviews.average(:rating)&.round || 0 %>
-
-            <% 5.times do |i| %>
-              <i class="fa-solid fa-star <%= i < avg_rating ? 'text-black' : 'text-gray-300' %>"></i>
-            <% end %>
-          </div>
-
-          <button class="primary-button w-full flex justify-center">
-            <i class="fa-solid fa-cart-plus"></i>
-          </button>
-        </div>
-      <% end %>
     </div>
 
     <div class="flex justify-center mt-10">
-      <a href="#" class="primary-button">
-        Переглянути весь каталог
-      </a>
+      <%= link_to "Переглянути весь каталог",
+    catalog_path,
+    class: "primary-button" %>
+
     </div>
 
   </div>
@@ -161,27 +115,9 @@
              lg:grid-cols-4"
     >
       <% @popular_collections.each do |collection| %>
-        <div class="category-card">
+  <%= render "collections/card", collection: collection %>
+<% end %>
 
-          <div class="aspect-square w-full mb-4 overflow-hidden">
-            <% if collection.photo.attached? %>
-              <%= image_tag collection.photo,
-                class: "w-full h-full object-cover" %>
-            <% else %>
-              <div class="w-full h-full bg-gray-100"></div>
-            <% end %>
-          </div>
-
-          <h3 class="text-sm mb-4 text-center">
-            <%= collection.name %>
-          </h3>
-
-          <a href="#"
-             class="primary-button w-full text-center">
-            Перейти
-          </a>
-        </div>
-      <% end %>
     </div>
 
   </div>

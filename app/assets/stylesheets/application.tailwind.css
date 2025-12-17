@@ -21,6 +21,11 @@
   }
 }
 
+header,
+footer {
+  background-color: #b8daff;
+}
+
 @layer components {
   .container {
     width: calc(100vw - 32px) !important;

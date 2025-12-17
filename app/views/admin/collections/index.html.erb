@@ -1,43 +1,60 @@
-<section class="py-12">
-  <div class="container max-w-3xl">
+<section class="py-12 bg-white">
+  <div class="container max-w-3xl space-y-6">
 
-    <div class="flex justify-between items-center mb-6">
-      <h1 class="text-xl">Колекції</h1>
+    <!-- Header -->
+    <div class="flex justify-between items-center">
+      <h1 class="text-xl font-medium">
+        Колекції
+      </h1>
 
-      <%= link_to "Додати",
-          new_admin_collection_path,
-          class: "primary-button" %>
+      <%= link_to "Додати колекцію",
+        new_admin_collection_path,
+        class: "px-4 py-2 border border-black text-sm transition
+               hover:bg-black hover:text-white" %>
     </div>
 
-    <table class="w-full text-sm border">
-      <thead>
-        <tr class="border-b">
-          <th class="p-2 text-left">Назва</th>
-          <th class="p-2">Товари</th>
-          <th class="p-2"></th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <% @collections.each do |collection| %>
-          <tr class="border-b">
-            <td class="p-2"><%= collection.name %></td>
-            <td class="p-2 text-center"><%= collection.products.count %></td>
-            <td class="p-2 text-right flex gap-2 justify-end">
-              <%= link_to "Редагувати",
-                  edit_admin_collection_path(collection),
-                  class: "text-blue-600" %>
-
-              <%= button_to "Видалити",
-                  admin_collection_path(collection),
-                  method: :delete,
-                  data: { confirm: "Ви впевнені?" },
-                  class: "text-red-600" %>
-            </td>
+    <!-- Table -->
+    <div class="border border-black">
+      <table class="w-full text-sm">
+        <thead class="border-b border-black">
+          <tr>
+            <th class="p-3 text-left font-medium">Назва</th>
+            <th class="p-3 text-center font-medium">Товари</th>
+            <th class="p-3 text-right font-medium"></th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
+
+        <tbody>
+          <% @collections.each do |collection| %>
+            <tr class="border-b last:border-b-0">
+              <td class="p-3">
+                <%= collection.name %>
+              </td>
+
+              <td class="p-3 text-center text-sm">
+                <%= collection.products.count %>
+              </td>
+
+              <td class="p-3">
+                <div class="flex justify-end gap-4 text-xs">
+
+                  <%= link_to "Редагувати",
+                    edit_admin_collection_path(collection),
+                    class: "underline underline-offset-4 hover:text-black" %>
+
+                  <%= button_to "Видалити",
+                    admin_collection_path(collection),
+                    method: :delete,
+                    data: { confirm: "Ви впевнені, що хочете видалити колекцію?" },
+                    class: "underline underline-offset-4 text-red-600 hover:text-red-800" %>
+
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
 
   </div>
 </section>

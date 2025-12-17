@@ -1,36 +1,94 @@
-<%= form_with model: [:admin, @product], local: true do |f| %>
+<%= form_with model: [:admin, @product], local: true, class: "space-y-6" do |f| %>
 
-  <%= f.label :title, "Назва" %>
-  <%= f.text_field :title, class: "w-full border p-2" %>
-
-  <%= f.label :description, "Опис" %>
-  <%= f.text_area :description, rows: 4, class: "w-full border p-2" %>
-
-  <%= f.label :price_cents, "Ціна (у копійках)" %>
-  <%= f.number_field :price_cents, class: "w-full border p-2" %>
-
-  <%= f.label :stock, "Кількість" %>
-  <%= f.number_field :stock, class: "w-full border p-2" %>
-
-  <%= f.label :category_id, "Категорія" %>
-  <%= f.collection_select :category_id,
-      @categories, :id, :name,
-      {}, class: "w-full border p-2" %>
-
-  <%= f.label :collection_ids, "Колекції" %>
-  <div class="border p-2 max-h-40 overflow-y-auto space-y-2">
-    <%= f.collection_check_boxes :collection_ids, @collections, :id, :name do |b| %>
-      <label class="flex gap-2 text-sm">
-        <%= b.check_box %>
-        <%= b.text %>
-      </label>
-    <% end %>
+  <!-- Назва -->
+  <div>
+    <%= f.label :title, "Назва",
+        class: "block text-xs uppercase tracking-wide mb-1" %>
+    <%= f.text_field :title,
+        class: "w-full border border-black p-2 text-sm" %>
   </div>
 
-  <%= f.label :images, "Зображення" %>
-  <%= f.file_field :images, multiple: true %>
+  <!-- Опис -->
+  <div>
+    <%= f.label :description, "Опис",
+        class: "block text-xs uppercase tracking-wide mb-1" %>
+    <%= f.text_area :description,
+        rows: 4,
+        class: "w-full border border-black p-2 text-sm" %>
+  </div>
 
+  <!-- Ціна -->
+  <div>
+    <%= f.label :price_cents, "Ціна (у копійках)",
+        class: "block text-xs uppercase tracking-wide mb-1" %>
+    <%= f.number_field :price_cents,
+        class: "w-full border border-black p-2 text-sm" %>
+  </div>
+
+  <!-- Кількість -->
+  <div>
+    <%= f.label :stock, "Кількість",
+        class: "block text-xs uppercase tracking-wide mb-1" %>
+    <%= f.number_field :stock,
+        class: "w-full border border-black p-2 text-sm" %>
+  </div>
+
+  <!-- Категорія -->
+  <div>
+    <%= f.label :category_id, "Категорія",
+        class: "block text-xs uppercase tracking-wide mb-1" %>
+    <%= f.collection_select :category_id,
+        @categories, :id, :name,
+        {}, class: "w-full border border-black p-2 text-sm bg-white" %>
+  </div>
+
+  <!-- Колекції -->
+  <div>
+    <%= f.label :collection_ids, "Колекції",
+        class: "block text-xs uppercase tracking-wide mb-2" %>
+
+    <div class="border border-black p-3 max-h-40 overflow-y-auto space-y-2">
+      <%= f.collection_check_boxes :collection_ids, @collections, :id, :name do |b| %>
+        <label class="flex gap-2 text-sm">
+          <%= b.check_box %>
+          <%= b.text %>
+        </label>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Поточні зображення -->
+  <% if @product.images.attached? %>
+    <div>
+      <p class="text-xs uppercase tracking-wide mb-2">
+        Поточні зображення
+      </p>
+
+      <div class="grid grid-cols-3 gap-3">
+        <% @product.images.each do |image| %>
+          <div class="border border-black aspect-square overflow-hidden">
+            <%= image_tag image, class: "w-full h-full object-cover" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- Нові зображення -->
+  <div>
+    <%= f.label :images, "Додати нові зображення",
+        class: "block text-xs uppercase tracking-wide mb-1" %>
+    <%= f.file_field :images,
+        multiple: true,
+        class: "text-sm" %>
+
+    <p class="text-xs text-gray-500 mt-1">
+      Якщо не обирати нові — поточні зображення залишаться
+    </p>
+  </div>
+
+  <!-- Submit -->
   <%= f.submit "Зберегти",
-      class: "primary-button w-full mt-4" %>
+      class: "w-full border border-black py-3 text-sm uppercase tracking-wide hover:bg-black hover:text-white transition" %>
 
 <% end %>

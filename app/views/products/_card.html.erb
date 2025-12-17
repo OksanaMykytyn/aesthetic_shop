@@ -1,17 +1,21 @@
 <div class="category-card">
 
-  <div class="aspect-square w-full mb-4 overflow-hidden">
-    <% if product.images.attached? %>
-      <%= image_tag product.images.first,
-        class: "w-full h-full object-cover" %>
-    <% else %>
-      <div class="w-full h-full bg-gray-100"></div>
-    <% end %>
-  </div>
+  <%= link_to product_path(product), class: "block" do %>
 
-  <h3 class="text-sm mb-2 text-center">
-    <%= product.title %>
-  </h3>
+    <div class="aspect-square w-full mb-4 overflow-hidden">
+      <% if product.images.attached? %>
+        <%= image_tag product.images.first,
+          class: "w-full h-full object-cover" %>
+      <% else %>
+        <div class="w-full h-full bg-gray-100"></div>
+      <% end %>
+    </div>
+
+    <h3 class="text-sm mb-2 text-center hover:underline">
+      <%= product.title %>
+    </h3>
+
+  <% end %>
 
   <p class="text-sm mb-2 text-center">
     <%= number_to_currency(product.price_cents / 100.0, unit: "₴") %>
@@ -25,13 +29,11 @@
     <% end %>
   </div>
 
- <%= button_to add_item_cart_path(product),
-    method: :post,
-    form_class: "w-full",
-    class: "primary-button w-full flex justify-center" do %>
-  <i class="fa-solid fa-cart-plus"></i>
-<% end %>
-
-
+  <%= button_to add_item_cart_path(product),
+      method: :post,
+      form_class: "w-full",
+      class: "primary-button w-full flex justify-center" do %>
+    <i class="fa-solid fa-cart-plus"></i>
+  <% end %>
 
 </div>

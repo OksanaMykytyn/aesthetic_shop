@@ -1,0 +1,24 @@
+<div class="category-card">
+
+  <%= link_to collection_path(collection), class: "block" do %>
+
+    <div class="aspect-square w-full mb-4 overflow-hidden">
+      <% if collection.photo.attached? %>
+        <%= image_tag collection.photo,
+          class: "w-full h-full object-cover" %>
+      <% else %>
+        <div class="w-full h-full bg-gray-100"></div>
+      <% end %>
+    </div>
+
+    <h3 class="text-sm mb-4 text-center hover:underline">
+      <%= collection.name %>
+    </h3>
+
+  <% end %>
+
+  <%= link_to "Перейти",
+      collection_path(collection),
+      class: "primary-button w-full text-center block" %>
+
+</div>

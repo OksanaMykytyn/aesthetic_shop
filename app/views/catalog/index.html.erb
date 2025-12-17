@@ -75,48 +75,12 @@
 
         <form id="filters" method="get"></form>
 
-        <div
-          class="grid gap-6
-                  grid-cols-1
-                  sm:grid-cols-2
-                  lg:grid-cols-3"
-        >
-          <% @products.each do |product| %>
-<div class="category-card cursor-pointer">
-
-              <div class="aspect-square w-full mb-4">
-  <% if product.images.attached? %>
-    <%= link_to product_path(product) do %>
-      <%= image_tag product.images.first,
-        class: "w-full h-full object-cover" %>
-    <% end %>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+  <% @products.each do |product| %>
+    <%= render "products/card", product: product %>
   <% end %>
 </div>
 
-              <h3 class="text-sm mb-2 text-center">
-  <%= link_to product.title,
-      product_path(product),
-      class: "hover:underline" %>
-</h3>
-
-
-              <p class="text-sm mb-2">
-                <%= number_to_currency(product.price_cents / 100.0, unit: "₴") %>
-              </p>
-
-              <div class="flex gap-1 mb-4">
-                <% avg = product.reviews.average(:rating)&.round || 0 %>
-                <% 5.times do |i| %>
-                  <i class="fa-solid fa-star <%= i < avg ? 'text-black' : 'text-gray-300' %>"></i>
-                <% end %>
-              </div>
-
-              <button class="primary-button w-full flex justify-center">
-                <i class="fa-solid fa-cart-plus"></i>
-              </button>
-            </div>
-          <% end %>
-        </div>
 
         <div class="flex justify-center mt-12">
           <%= paginate @products, theme: 'custom' %>

@@ -32,13 +32,20 @@ class Admin::ProductsController < ApplicationController
   end
 
   def update
-    if @product.update(product_params)
-      redirect_to admin_products_path, notice: "Товар оновлено"
-    else
-      load_dependencies
-      render :edit
-    end
+  filtered_params = product_params
+
+  if filtered_params[:images].blank?
+    filtered_params = filtered_params.except(:images)
   end
+
+  if @product.update(filtered_params)
+    redirect_to admin_products_path, notice: "Товар оновлено"
+  else
+    load_dependencies
+    render :edit
+  end
+end
+
 
   def destroy
     @product.destroy

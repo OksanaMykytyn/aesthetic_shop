@@ -1,43 +1,57 @@
-<section class="py-12">
+<section class="py-12 bg-white text-black">
   <div class="container max-w-5xl">
 
-    <h1 class="text-xl mb-6">Замовлення</h1>
+    <h1 class="text-xl mb-6 text-center">
+      Замовлення
+    </h1>
 
-    <table class="w-full text-sm border">
-      <thead>
-        <tr class="border-b bg-gray-50">
-          <th class="p-3">№</th>
-          <th class="p-3">Користувач</th>
-          <th class="p-3">Сума</th>
-          <th class="p-3">Статус</th>
-          <th class="p-3">Дата</th>
-          <th class="p-3"></th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <% @orders.each do |order| %>
-          <tr class="border-b text-center">
-            <td class="p-3"><%= order.number || order.id %></td>
-            <td class="p-3"><%= order.user.email %></td>
-            <td class="p-3">
-              <%= number_to_currency(order.total_cents / 100.0, unit: "₴") %>
-            </td>
-            <td class="p-3"><%= order.status %></td>
-            <td class="p-3 text-xs">
-              <%= l(order.created_at, format: :short) %>
-            </td>
-            <td class="p-3">
-              <%= link_to "Переглянути",
-                  admin_order_path(order),
-                  class: "text-blue-600 text-xs" %>
-            </td>
+    <div class="border border-black overflow-hidden">
+      <table class="w-full text-sm">
+        <thead class="border-b border-black bg-gray-50">
+          <tr>
+            <th class="p-3 text-left">№</th>
+            <th class="p-3 text-left">Користувач</th>
+            <th class="p-3 text-right">Сума</th>
+            <th class="p-3 text-center">Статус</th>
+            <th class="p-3 text-center">Дата</th>
+            <th class="p-3"></th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
 
-    <div class="mt-8 flex justify-center">
+        <tbody>
+          <% @orders.each do |order| %>
+            <tr class="border-b hover:bg-gray-50">
+              <td class="p-3 font-medium">
+                <%= order.number %>
+              </td>
+
+              <td class="p-3">
+                <%= order.user.email %>
+              </td>
+
+              <td class="p-3 text-right">
+                <%= number_to_currency(order.total_cents / 100.0, unit: "₴") %>
+              </td>
+
+              <td class="p-3 text-center">
+                <span class="px-2 py-1 text-xs border border-black">
+                  <%= order.human_status %>
+                </span>
+              </td>
+
+              <td class="p-3 text-center text-xs text-gray-600">
+                <%= l(order.created_at, format: :short) %>
+              </td>
+
+              <td class="p-3 text-center">
+                <%= link_to "Переглянути",
+                  admin_order_path(order),
+                  class: "underline text-sm" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
     </div>
 
   </div>

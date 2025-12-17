@@ -1,4 +1,4 @@
-<section class="py-16 bg-white text-black">
+<section class="py-16 bg-white text-black" data-controller="delivery">
   <div class="container max-w-4xl">
 
     <h1 class="text-xl mb-8 text-center">
@@ -31,7 +31,9 @@
       </div>
     </div>
 
-    <%= form_with url: checkout_path, method: :post, local: true do %>
+<%= form_with url: checkout_path,
+              method: :post,
+              data: { turbo: false } do %>
 
       <div class="mb-10">
         <h2 class="text-lg mb-4">Дані одержувача</h2>
@@ -80,68 +82,52 @@
           Онлайн-оплата (Stripe)
         </label>
       </div>
+<div class="mb-6">
+  <h2 class="text-lg mb-4">Доставка</h2>
 
-      <div class="mb-10">
-        <h2 class="text-lg mb-4">Доставка</h2>
+  <select
+    name="order[shipping_address][delivery_type]"
+    class="search-input w-full mb-4"
+    data-action="change->delivery#change"
+    data-delivery-target="type"
+  >
+    <option value="">Оберіть спосіб доставки</option>
+    <option value="courier">Курʼєр</option>
+    <option value="branch">У відділення</option>
+    <option value="postomat">У поштомат</option>
+  </select>
 
-        <select
-          name="order[shipping_address][delivery_type]"
-          class="search-input w-full mb-4"
-        >
-          <option value="">Оберіть тип доставки</option>
-          <option value="branch">У відділення</option>
-          <option value="postomat">У поштомат</option>
-          <option value="courier">Курʼєром</option>
-        </select>
+  <select
+    name="order[shipping_address][carrier]"
+    class="search-input w-full mb-4"
+  >
+    <option value="">Оберіть пошту</option>
+    <option value="nova_poshta">Нова Пошта</option>
+    <option value="ukrposhta">Укрпошта</option>
+  </select>
 
-        <select
-          name="order[shipping_address][carrier]"
-          class="search-input w-full mb-4"
-        >
-          <option value="">Оберіть пошту</option>
-          <option value="nova_poshta">Нова Пошта</option>
-          <option value="ukrposhta">Укрпошта</option>
-        </select>
+  <div class="hidden space-y-2" data-delivery-target="courier">
+    <input name="order[shipping_address][city]" placeholder="Місто" class="search-input w-full">
+    <input name="order[shipping_address][street]" placeholder="Вулиця" class="search-input w-full">
+    <input name="order[shipping_address][house]" placeholder="Будинок" class="search-input w-full">
+    <input name="order[shipping_address][postal_code]" placeholder="Поштовий індекс" class="search-input w-full">
+  </div>
 
-        <input
-          type="text"
-          name="order[shipping_address][city]"
-          placeholder="Місто"
-          class="search-input w-full mb-4"
-        >
+  <div class="hidden space-y-2" data-delivery-target="branch">
+    <input name="order[shipping_address][city]" placeholder="Місто" class="search-input w-full">
+    <input name="order[shipping_address][branch_number]" placeholder="№ відділення" class="search-input w-full">
+  </div>
 
-        <input
-          type="text"
-          name="order[shipping_address][postal_code]"
-          placeholder="Поштовий індекс"
-          class="search-input w-full mb-4"
-        >
+  <div class="hidden space-y-2" data-delivery-target="postomat">
+    <input name="order[shipping_address][city]" placeholder="Місто" class="search-input w-full">
+    <input name="order[shipping_address][branch_number]" placeholder="№ поштомату" class="search-input w-full">
+  </div>
+</div>
 
-        <input
-          type="text"
-          name="order[shipping_address][branch_number]"
-          placeholder="№ відділення / поштомату"
-          class="search-input w-full mb-4"
-        >
 
-        <input
-          type="text"
-          name="order[shipping_address][street]"
-          placeholder="Вулиця"
-          class="search-input w-full mb-4"
-        >
-
-        <input
-          type="text"
-          name="order[shipping_address][house]"
-          placeholder="Будинок"
-          class="search-input w-full"
-        >
-      </div>
-
-      <button class="primary-button w-full flex justify-center">
-        Підтвердити замовлення
-      </button>
+<button class="primary-button w-full flex justify-center mt-10">
+  Підтвердити замовлення
+</button>
 
     <% end %>
 

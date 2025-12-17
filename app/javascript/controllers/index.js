@@ -4,6 +4,8 @@ import SliderController from "./slider_controller";
 import FilterController from "./filter_controller";
 import PasswordController from "./password_controller";
 import FormErrorsController from "./form_errors_controller";
+import DeliveryController from "./delivery_controller";
+application.register("delivery", DeliveryController);
 application.register("form-errors", FormErrorsController);
 application.register("password", PasswordController);
 application.register("filter", FilterController);
