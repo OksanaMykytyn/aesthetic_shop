@@ -19,6 +19,10 @@ namespace :setup do
       "db/migrate/20251213234752_add_default_to_users_role.rb"
     ]
 
+
+   context = ActiveRecord::Base.connection.migration_context
+    executed_versions = context.get_all_versions.map(&:to_s)
+
     puts "➡️ Запуск міграцій у заданому порядку..."
 
     ordered_migrations.each do |file|
@@ -31,13 +35,13 @@ namespace :setup do
 
       version = file.split("_").first
 
-      if ActiveRecord::SchemaMigration.where(version: version).exists?
+      if executed_versions.include?(version)
         puts "⏭ Пропущено (вже виконана): #{file}"
         next
       end
 
       puts "🚀 Виконую: #{file}"
-      ActiveRecord::Migrator.run(:up, migrations_path, version)
+      context.run(:up, migrations_path, version)
     end
 
     puts "✅ Міграції завершено"
