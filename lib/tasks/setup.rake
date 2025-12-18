@@ -16,7 +16,7 @@ namespace :setup do
       "20251213010249_create_orders.rb",
       "20251213010310_create_order_items.rb",
       "20251213010418_create_reviews.rb",
-      "db/migrate/20251213234752_add_default_to_users_role.rb"
+      "20251213234752_add_default_to_users_role.rb"
     ]
 
 
