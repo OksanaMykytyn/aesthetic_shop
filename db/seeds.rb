@@ -4,7 +4,6 @@ require "open-uri"
 IMAGE_URL = "https://i.pinimg.com/736x/de/ee/54/deee549159e45df5677998418f29a877.jpg"
 
 puts "Cleaning DB..."
-# Be careful in production!
 OrderItem.delete_all
 Order.delete_all
 CartItem.delete_all
@@ -18,7 +17,6 @@ Address.delete_all
 User.delete_all
 
 puts "Creating users..."
-# Create manager
 manager = User.create!(
   email: "manager@example.com",
   password: "password123",
@@ -29,7 +27,6 @@ manager = User.create!(
   is_verified: true
 )
 
-# Create some customers
 users = []
 5.times do |i|
   u = User.create!(
@@ -43,14 +40,12 @@ users = []
   )
   users << u
 
-  # Attach avatar
   begin
     u.avatar.attach(io: URI.open(IMAGE_URL), filename: "avatar#{i+1}.jpg")
   rescue => e
     puts "Avatar attach failed: #{e.message}"
   end
 
-  # create default address
   u.addresses.create!(
     label: "Home",
     recipient_name: "#{u.first_name} #{u.last_name}",
@@ -70,7 +65,6 @@ categories = []
 %w[Зошити Ручки Олівці Блокноти Папір].each_with_index do |name, idx|
   c = Category.create!(name: name, slug: name.parameterize, description: "#{name} description")
   categories << c
-  # attach photo
   begin
     c.photo.attach(io: URI.open(IMAGE_URL), filename: "category#{idx+1}.jpg")
   rescue => e
@@ -99,7 +93,7 @@ products = []
     slug: title.parameterize,
     sku: "SKU#{1000 + i}",
     description: "Description for #{title}",
-    price_cents: ((i + 1) * 100), # e.g. 100, 200, ...
+    price_cents: ((i + 1) * 100), 
     currency: "UAH",
     stock: 10 + (i % 20),
     category: categories.sample,
@@ -107,14 +101,12 @@ products = []
     active: true
   )
 
-  # attach image (same image for all)
   begin
     p.images.attach(io: URI.open(IMAGE_URL), filename: "product#{i+1}.jpg")
   rescue => e
     puts "Product image attach failed for #{p.title}: #{e.message}"
   end
 
-  # assign some collections
   if i % 5 == 0
     ProductCollection.create!(product: p, collection: collections.sample)
   end
@@ -125,14 +117,12 @@ end
 puts "Creating carts and cart_items..."
 users.each_with_index do |u, idx|
   cart = Cart.create!(user: u, status: "active")
-  # add up to 3 items
   1.upto( [3, (idx + 1)].min ) do |n|
     CartItem.create!(cart: cart, product: products.sample, quantity: 1 + (n % 2))
   end
 end
 
 puts "Creating orders..."
-# Create a few orders for first users
 2.times do |i|
   user = users[i]
   order = Order.create!(
@@ -149,7 +139,6 @@ puts "Creating orders..."
     promo_discount_cents: (i == 1 ? 100 : 0)
   )
 
-  # add 2 items
   product1 = products.sample
   product2 = products.sample
   oi1 = OrderItem.create!(
@@ -168,12 +157,10 @@ puts "Creating orders..."
     unit_price_cents: product2.price_cents,
     total_price_cents: product2.price_cents * 2
   )
-  # update total
   order.update!(total_cents: oi1.total_price_cents + oi2.total_price_cents - (order.promo_discount_cents || 0))
 end
 
 puts "Creating reviews..."
-# random reviews
 10.times do
   Review.create!(
     user: users.sample,

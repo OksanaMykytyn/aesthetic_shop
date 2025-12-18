@@ -3,12 +3,9 @@ class CatalogController < ApplicationController
     @categories  = Category.all
     @collections = Collection.all
 
-    is_filtered = params.except(:controller, :action, :page, :commit).present?
-
     products = Product
-      .includes(:category, :collections, :reviews)
-      .references(:category, :collections)
-
+      .includes(:category, :collections)
+      .where(active: true)
 
     if params[:query].present?
       products = products.where("products.title ILIKE ?", "%#{params[:query]}%")
@@ -19,8 +16,9 @@ class CatalogController < ApplicationController
     end
 
     if params[:collections].present?
-      products = products.joins(:collections)
-                         .where(collections: { id: params[:collections] })
+      products = products
+        .joins(:collections)
+        .where(collections: { id: params[:collections] })
     end
 
     if params[:price_from].present?
@@ -32,18 +30,28 @@ class CatalogController < ApplicationController
     end
 
     if params[:ratings].present?
-      products = products
-        .left_joins(:reviews)
-        .group("products.id")
-        .having("AVG(reviews.rating) IN (?)", params[:ratings].map(&:to_i))
+      products = products.where(rating_avg: params[:ratings].map(&:to_i))
     end
 
-    current_page = if is_filtered
-                     1 
-                   else
-                     params[:page]
-                   end
-    
-    @products = products.select("products.*").distinct.page(current_page).per(18)
+    products = products.order(sort_order)
+
+    @products = products.distinct.page(params[:page]).per(18)
+  end
+
+  private
+
+  def sort_order
+    case params[:sort]
+    when "price_asc"
+      "price_cents ASC"
+    when "price_desc"
+      "price_cents DESC"
+    when "rating_desc"
+      "rating_avg DESC NULLS LAST"
+    when "newest"
+      "created_at DESC"
+    else
+      "created_at DESC"
+    end
   end
 end

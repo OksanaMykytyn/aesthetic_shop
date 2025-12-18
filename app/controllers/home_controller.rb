@@ -13,9 +13,9 @@ class HomeController < ApplicationController
       .limit(4)
     
     @popular_products = Product
-      .left_joins(:order_items)
-      .group(:id)
-      .order(Arel.sql("COUNT(order_items.id) DESC"))
-      .limit(12)
+  .where(active: true)
+  .order(created_at: :desc)
+  .limit(12)
+
   end
 end
